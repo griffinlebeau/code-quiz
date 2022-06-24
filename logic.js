@@ -11,20 +11,22 @@ var questionArray = [
 
 var scores = []
 
+var main = $("<div>").addClass("quiz-container");
+var question = $("<h5>");
+var answerA = $("<p>").attr("id", "a");
+var answerB = $("<p>").attr("id", "b");
+var answerC = $("<p>").attr("id", "c");
 
-
-var generateQuestionEl = function(questionArray) {
-    var main = $("<div>").addClass("quiz-container")
-    var question = $("<h5>").text(questionArray[i].question)
-    var answerA = $("<p>").text(questionArray[i].a).attr("id", "a");
-    var answerB = $("<p>").text(questionArray[i].b).attr("id", "b");
-    var answerC = $("<p>").text(questionArray[i].c).attr("id", "c");
-    $(".main-container").append(main);
+var generateQuestionEl = function(){
     main.append(question);
     main.append(answerA);
     main.append(answerB);
     main.append(answerC);
+    $(".main-container").append(main);
 }
+
+
+
 
 var endQuiz = function() {
     $(".quiz-container").addClass("is-hidden");
@@ -62,32 +64,48 @@ var displayScores = function() {
         var scoreItem = $("<li>").text(scores[i].initials + "" + scores[i].score);
         scoresList.append(scoreItem);
     }
+    $("<button>").on("click", function(){
+        scoresList.addClass("is-hidden");
+        $(".intro-container").removeClass("is-hidden");
+    })
 }
 
-$(".start-btn").on("click", function() {
-    $(".intro-container").addClass("is-hidden");
-    var count = 75
+var count = 75
+
+var startTimer = function() {
     var timer = setInterval(function() {
         $("#counter").html(count--);
         if(count == 1) clearInterval(timer);
     }, 1000);
+}
+
+var questionLoop = function(questionArray){
+    for (i = 0; i < questionArray.length; i++) {
+        question.text(questionArray[i].question)
+        answerA.text(questionArray[i].a);
+        answerB.text(questionArray[i].b);
+        answerC.text(questionArray[i].c);
+        $(".answer-container").on("click", "p", function() {
+            if ($(this).attr("id") === questionArray[i].correctAnswer) {
+                $(this).addClass("correct")
+                return
+            }
+            else {
+                $(this).addClass("incorrect");
+                count - 10
+                return
+        
+            }
+        })
+    }
+}
+
+$(".start-btn").on("click", function() {
+    $(".intro-container").addClass("is-hidden");
+    startTimer();
+    generateQuestionEl();
     while (count > 1) {
-        for (i = 0; i < questionArray.length; i++) {
-            generateQuestionEl(questionArray[i]);
-            $(".answer-container").on("click", "p", function() {
-                if ($(this).attr("id") === questionArray[i].correctAnswer) {
-                    $(this).addClass("correct")
-                    return
-                }
-                else {
-                    $(this).addClass("incorrect");
-                    count - 10
-                    return
-            
-                }
-            })
-        }
-        endQuiz(count)
+        questionLoop(questionArray);
     }
     endQuiz(count)
 
