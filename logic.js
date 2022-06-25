@@ -1,13 +1,4 @@
 
-var questionArray = [
-    {
-        question: "Which character in an IF statement is used to check if 2 things are NOT EQUAL",
-        a: "!",
-        b: "?",
-        c: "$",
-        correctAnswer: "a"
-    }
-]
 
 var scores = []
 
@@ -79,7 +70,7 @@ var startTimer = function() {
     }, 1000);
 }
 
-var questionLoop = function(questionArray){
+//var questionLoop = function(questionArray){
     for (i = 0; i < questionArray.length; i++) {
         question.text(questionArray[i].question)
         answerA.text(questionArray[i].a);
