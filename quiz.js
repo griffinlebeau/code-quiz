@@ -1,63 +1,63 @@
-const questions = [
+var questions = [
     {
         question: "What is an anonymous function?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "Which method will be used to convert data prior to being sent to local storage?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "What does JSON stand for?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "How much padding will be applied to the left side of an element with this class: 'padding: 25px 50px 75px 100px'?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "Which HTML tag is used to embed an image in a webpage?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "Which of these is NOT a way to declare a variable?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "What does OOP stand for?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "What is the name of the most widely used Javascript package manager?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "Which symbol is used to assign a value to a variable?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     },
     {
         question: "Which of these is not a Boolean data type?",
-        correct: "",
-        incorrectUno: "",
-        incorrectDos: ""
+        correct: "test",
+        incorrectUno: "test",
+        incorrectDos: "test"
     }
 ];
 
@@ -65,16 +65,19 @@ const quizQuestion = document.getElementById('quiz-question');
 const optionUno = document.getElementById('li-one');
 const optionDos = document.getElementById('li-two');
 const optionTres = document.getElementById('li-three');
-const answerEls = [optionUno, optionDos, optionTres];
+var answerEls = [optionUno, optionDos, optionTres];
 const correctIn = document.getElementById('correct-indicator');
 const scoreForm = document.getElementById('score-form');
 scoreForm.style.display = "none";
 
-shuffleArray = array => {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j] = array[j], array[i]];
+shuffleArray = arr => {
+    for (let i = arr.length -1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        const temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp;
     }
+    return arr
 };
 
 scoreHandler = score => {
@@ -104,8 +107,10 @@ function endQuiz() {
 var timeLeft = 75;
 var clock = document.getElementById('clock');
 var startTimer = function() {
-        var timer = setInterval(function() {
-            clock.innerHTML(timeLeft--);
+        var timer = setInterval(function(){
+            var clockTime = JSON.stringify(timeLeft--);
+            console.log(clockTime);
+            //clock.innerHTML(clockTime);
             if(timeLeft == 1){
                 clearInterval(timer);
                 endQuiz();
@@ -117,30 +122,30 @@ function quizLoop() {
     var shuffledQs = shuffleArray(questions);
     var shuffledEls = shuffleArray(answerEls);
     startTimer();
-    for (let i = shuffledQs.length - 1; i > 0; i--) {
+    for (let i = 0; i < shuffledQs.length; i++) {
             var question = quizQuestion;
             var correct = shuffledEls[0];
             var incorrectUno = shuffledEls[1];
             var incorrectDos = shuffledEls[2];
-            question.innerText = shuffledQs[i].question;
-            correct.innerText = shuffledQs[i].correct;
-            incorrectUno.innerText = shuffledQs[i].incorrectUno;
-            incorrectDos.innerText = shuffledQs[i].incorrectDos;
+            console.log(shuffledQs[1].question);
+            question.innerHTML = shuffledQs[i].question;
+            correct.innerHTML = shuffledQs[i].correct;
+            incorrectUno.innerHTML = shuffledQs[i].incorrectUno;
+            incorrectDos.innerHTML = shuffledQs[i].incorrectDos;
             correct.addEventListener("click", function(){
                 correctIn.innerText = "Correct!";
-                return
-            })
+            });
             incorrectUno.addEventListener("click", function(){
                 correctIn.innerText = "Incorrect!";
                 timeLeft - 10;
-                return
-            })
+            });
             incorrectDos.addEventListener("click", function(){
                 correctIn.innerText = "Incorrect!";
                 timeLeft - 10;
-                return
-            })
+            });
+            return;
         };
+ 
 }
 
 function startGame() {
