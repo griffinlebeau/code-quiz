@@ -91,6 +91,7 @@ scoreHandler = score => {
         localStorage.setItem("scores", JSON.stringify(scores));
     }
 }
+
 function endQuiz() {
     var newScore = {};
     scoreForm.style.display = "block";
@@ -120,34 +121,34 @@ var startTimer = function() {
 
 function quizLoop() {
     var shuffledQs = shuffleArray(questions);
-    var shuffledEls = shuffleArray(answerEls);
     startTimer();
     for (let i = 0; i < shuffledQs.length; i++) {
+            var shuffledEls = shuffleArray(answerEls);
             var question = quizQuestion;
             var correct = shuffledEls[0];
             var incorrectUno = shuffledEls[1];
             var incorrectDos = shuffledEls[2];
-            console.log(shuffledQs[1].question);
             question.innerHTML = shuffledQs[i].question;
             correct.innerHTML = shuffledQs[i].correct;
             incorrectUno.innerHTML = shuffledQs[i].incorrectUno;
             incorrectDos.innerHTML = shuffledQs[i].incorrectDos;
             correct.addEventListener("click", function(){
                 correctIn.innerText = "Correct!";
-            });
+                return
+            })
             incorrectUno.addEventListener("click", function(){
                 correctIn.innerText = "Incorrect!";
-                timeLeft - 10;
-            });
+                timeLeft - 10
+                return
+            ;})
             incorrectDos.addEventListener("click", function(){
                 correctIn.innerText = "Incorrect!";
                 timeLeft - 10;
-            });
-            return;
+                return
+            })
         };
- 
-}
-
+    }
+            
 function startGame() {
     quizLoop();
     endQuiz();
