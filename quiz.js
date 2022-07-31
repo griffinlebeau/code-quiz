@@ -69,6 +69,7 @@ var answerEls = [optionUno, optionDos, optionTres];
 const correctIn = document.getElementById('correct-indicator');
 const scoreForm = document.getElementById('score-form');
 scoreForm.style.display = "none";
+const quizList = document.getElementById('quiz-list');
 
 shuffleArray = arr => {
     for (let i = arr.length -1; i > 0; i--) {
@@ -110,8 +111,7 @@ var clock = document.getElementById('clock');
 var startTimer = function() {
         var timer = setInterval(function(){
             var clockTime = JSON.stringify(timeLeft--);
-            console.log(clockTime);
-            //clock.innerHTML(clockTime);
+            clock.innerHTML = clockTime;
             if(timeLeft == 1){
                 clearInterval(timer);
                 endQuiz();
@@ -119,34 +119,52 @@ var startTimer = function() {
         }, 1000);
     }
 
+const questionHandler = question => {
+    var shuffledEls = shuffleArray(answerEls);
+    console.log(answerEls);
+    var prompt = quizQuestion;
+    var correct = shuffledEls[0];
+    var incorrectUno = shuffledEls[1];
+    var incorrectDos = shuffledEls[2];
+    prompt.innerHTML = question.question;
+    correct.innerHTML = question.correct;
+    incorrectUno.innerHTML = question.incorrectUno;
+    incorrectDos.innerHTML = question.incorrectDos;
+    quizList.addEventListener("click", function(evt){
+        if (evt.target === correct){
+            correctIn.innerText = "Correct!"; 
+        } else {
+            correctIn.innerText = "Incorrect!";
+            timeLeft -= 10
+        }
+});
+    };
+
+
 function quizLoop() {
     var shuffledQs = shuffleArray(questions);
     startTimer();
-    for (let i = 0; i < shuffledQs.length; i++) {
-            var shuffledEls = shuffleArray(answerEls);
-            var question = quizQuestion;
-            var correct = shuffledEls[0];
-            var incorrectUno = shuffledEls[1];
-            var incorrectDos = shuffledEls[2];
-            question.innerHTML = shuffledQs[i].question;
-            correct.innerHTML = shuffledQs[i].correct;
-            incorrectUno.innerHTML = shuffledQs[i].incorrectUno;
-            incorrectDos.innerHTML = shuffledQs[i].incorrectDos;
-            correct.addEventListener("click", function(){
-                correctIn.innerText = "Correct!";
-                return
-            })
-            incorrectUno.addEventListener("click", function(){
-                correctIn.innerText = "Incorrect!";
-                timeLeft - 10
-                return
-            ;})
-            incorrectDos.addEventListener("click", function(){
-                correctIn.innerText = "Incorrect!";
-                timeLeft - 10;
-                return
-            })
-        };
+    shuffledQs.forEach(question => {
+        questionHandler(question);
+        console.log(question)
+    });
+    //for (let i = 0; i < shuffledQs.length; i++) {
+            //questionHandler(shuffledQs[i]);
+            //await quizList.addEventListener("click", function(evt){
+                    //if (evt.target === correct){
+                        //correctIn.innerText = "Correct!"; 
+                    //}
+                    //else if (evt.target === incorrectUno){
+                        //correctIn.innerText = "Incorrect!";
+                        //timeLeft -= 10
+                    //}
+                    //else {
+                        //correctIn.innerText = "Incorrect!";
+                        //timeLeft -= 10
+                    //}
+            //});
+            //console.log(shuffledQs[i]);
+        //};
     }
             
 function startGame() {
