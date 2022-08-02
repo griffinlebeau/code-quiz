@@ -82,27 +82,31 @@ shuffleArray = arr => {
 };
 
 scoreHandler = score => {
-    if (!localStorage.getItem("scores")) {
+    var storage = localStorage.getItem("scores");
+    if (!storage) {
         const scores = [];
         scores.push[score];
         localStorage.setItem("scores", JSON.stringify(scores));
     } else {
-        const scores = JSON.parse(localStorage.getItem("scores"));
+        const scores = JSON.parse(storage);
         scores.push(score);
         localStorage.setItem("scores", JSON.stringify(scores));
     }
 }
 
-function endQuiz() {
-    var newScore = {};
+function endQuiz(time) {
+    var newScore = {
+        initials: "",
+        score: "",
+    };
     scoreForm.style.display = "block";
     scoreForm.addEventListener("submit", function(){
         const form = new FormData(scoreForm);
         const initials = form.get("initials");
         newScore.initials = initials;
-        newScore.score = timeLeft;
+        newScore.score = time;
         scoreHandler(newScore);
-        window.open('/scores.html', '_blank')
+        window.open("scores.html", "_blank")
     })
 }
 
@@ -112,16 +116,17 @@ var startTimer = function() {
         var timer = setInterval(function(){
             var clockTime = JSON.stringify(timeLeft--);
             clock.innerHTML = clockTime;
-            if(timeLeft == 1){
+            if(timeLeft < 1){
                 clearInterval(timer);
-                endQuiz();
+                timeLeft = 0;
+                endQuiz(timeLeft);
             };
         }, 1000);
     }
 
 const questionHandler = question => {
     var shuffledEls = shuffleArray(answerEls);
-    console.log(answerEls);
+    //console.log(answerEls);
     var prompt = quizQuestion;
     var correct = shuffledEls[0];
     var incorrectUno = shuffledEls[1];
@@ -132,22 +137,20 @@ const questionHandler = question => {
     incorrectDos.innerHTML = question.incorrectDos;
     quizList.addEventListener("click", function(evt){
         if (evt.target === correct){
-            correctIn.innerText = "Correct!"; 
+            correctIn.innerText = "Correct!";
+            startGame(); 
         } else {
             correctIn.innerText = "Incorrect!";
-            timeLeft -= 10
+            timeLeft -= 5
+            startGame();
         }
-});
+    });
     };
 
 
-function quizLoop() {
-    var shuffledQs = shuffleArray(questions);
+function quizLoop(currentQ) {
+    questionHandler(currentQ);
     startTimer();
-    shuffledQs.forEach(question => {
-        questionHandler(question);
-        console.log(question)
-    });
     //for (let i = 0; i < shuffledQs.length; i++) {
             //questionHandler(shuffledQs[i]);
             //await quizList.addEventListener("click", function(evt){
@@ -167,9 +170,16 @@ function quizLoop() {
         //};
     }
             
-function startGame() {
-    quizLoop();
-    endQuiz();
+function startGame(shuffledQs) {
+    if(questions.length > 1){
+        var shuffledQs = shuffleArray(questions);
+        //console.log(shuffledQs);
+        quizLoop(shuffledQs.pop());
+    } else {
+        endQuiz(timeLeft)
+    }
+
 }
+
 
 startGame();
