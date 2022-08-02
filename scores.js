@@ -12,5 +12,6 @@ scores.sort(function(a, b){
 });
 
 scores.forEach(generateScores)
+console.log(scores)
 
 
