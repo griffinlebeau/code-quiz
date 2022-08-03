@@ -5,41 +5,45 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Code Quiz</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     </head>
     <body>
-        <header>
-            <div>
-                <a href="./scores.html">View High Scores</a>
+        <header class="columns is-centered">
+            <div class="header column is-2 box m-6 has-text-centered">
+                <a class="is-size-6 has-text-weight-bold" href="./scores.html">View High Scores</a>
             </div>
-            <div id="clock-con">
-                <h3 id="clock-label">Timer:</h3>
-                <p id="clock"></p>
+            <div class="box column is-2 m-6">
+                <div class="level" id="clock-con">
+                    <h3 class="level-left is-size-5 has-text-weight-bold has-text-centered" id="clock-label">Timer:</h3>
+                    <p class="level-right is-size-5 has-text-weight-bold has-text-centered" id="clock"></p>
+                </div>
             </div>
-            <div>
-                <h5 id="correct-indicator">
+
+            <div class="box column is-2 m-6" id="correct-container">
+                <h5 class="has-text-white has-text-weight-bold has-text-centered is-size-5" id="correct-indicator">
                 </h5>
             </div>
         </header>
-        <main>
-            <div>
-                <h4 id="quiz-question">
+        <main class="columns is-centered">
+            <div class="column is-two-thirds box">
+                <h4 class="is-size-4 block" id="quiz-question">
                 </h4>
-                <ul id="quiz-list">
-                    <li id="li-one">
+                <ul class="is-size-4" id="quiz-list">
+                    <li class="box is-clickable" id="li-one">
                     </li>
-                    <li id="li-two">
+                    <li class="box is-clickable" id="li-two">
                     </li>
-                    <li id="li-three">
+                    <li class="box is-clickable" id="li-three">
                     </li>
                 </ul>
             </div>
-            <div>
-                <form id="score-form" action="./scores.html">
-                    <label for="initials">Initials:</label><br>
-                    <input type="text" name="initials">
-                    <input type="submit" name="submit">
-                </form>
-            </div>
         </main>
+        <div class="columns is-centered m-6">
+            <form class="column is-half box" id="score-form" action="./scores.html">
+                <label class="m-3 has-text-weight-bold" for="initials">Initials:</label><br>
+                <input class="input is-rounded" type="text" name="initials">
+                <input class="button m-3" type="submit" name="submit">
+            </form>
+        </div>
         <script src="./quiz.js"></script>
     </body>

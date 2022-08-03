@@ -72,6 +72,7 @@ scoreForm.style.display = "none";
 const quizList = document.getElementById('quiz-list');
 const clockContainer = document.getElementById('clock-con');
 const clockLabel = document.getElementById('clock-label');
+const correctCon = document.getElementById('correct-container')
 
 shuffleArray = arr => {
     for (let i = arr.length -1; i > 0; i--) {
@@ -162,9 +163,13 @@ function startGame() {
             console.log(answerEls[0])
             if (evt.target === answerEls[0]){
                 correctIn.innerText = "Correct!";
+                correctCon.classList.remove("has-background-danger")
+                correctCon.classList.add("has-background-primary")
                 quizLoop(); 
             } else {
                 correctIn.innerText = "Incorrect!";
+                correctCon.classList.remove("has-background-primary")
+                correctCon.classList.add("has-background-danger")
                 timeLeft -= 5
                 quizLoop();
             }
