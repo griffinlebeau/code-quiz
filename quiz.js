@@ -94,16 +94,18 @@ scoreHandler = score => {
 }
 
 function endQuiz(time) {
+    var scoreDisplay = document.createElement('h3');
+    scoreDisplay.innerText = time
+    clock.classList = "display:none"
     var newScore = {
         initials: "",
-        score: "",
+        score: time,
     };
     scoreForm.style.display = "block";
     scoreForm.addEventListener("submit", function(){
         const form = new FormData(scoreForm);
         const initials = form.get("initials");
         newScore.initials = initials;
-        newScore.score = time;
         scoreHandler(newScore);
         console.log(newScore)
 
@@ -113,20 +115,24 @@ function endQuiz(time) {
 var timeLeft = 75;
 var clock = document.getElementById('clock');
 var startTimer = function() {
-        var timer = setInterval(function(){
-            var clockTime = JSON.stringify(timeLeft--);
-            clock.innerHTML = clockTime;
-            if(timeLeft < 1){
-                clearInterval(timer);
-                timeLeft = 0;
-                endQuiz(timeLeft);
-            };
-        }, 1000);
+    var timer = setInterval(function(){
+        var clockTime = JSON.stringify(timeLeft--);
+        clock.innerHTML = clockTime;
+        if(timeLeft < 1){
+            clearInterval(timer);
+            timeLeft = 0;
+            endQuiz(timeLeft);
+        };
+    }, 1000);
     }
+
+function stopTimer(clock){
+    score = clock.value
+    clock.innerHTML = ""
+}
 
 const questionHandler = question => {
     answerEls = shuffleArray(answerEls);
-    //console.log(answerEls);
     quizQuestion.innerText = question.question;
     answerEls[0].innerText = question.correct;
     answerEls[1].innerText = question.incorrectUno;
