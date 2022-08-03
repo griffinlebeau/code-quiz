@@ -1,63 +1,63 @@
 var questions = [
     {
         question: "What is an anonymous function?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "a function without a name",
+        incorrectUno: "a function without a variable",
+        incorrectDos: "a function without an argument"
     },
     {
         question: "Which method will be used to convert data prior to being sent to local storage?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "JSON.parse()",
+        incorrectUno: "JSON.compute()",
+        incorrectDos: "JSON.convert()"
     },
     {
         question: "What does JSON stand for?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "Java Script Object Notation",
+        incorrectUno: "Java Script Oriented Notation",
+        incorrectDos: "Java Script Onset Node"
     },
     {
         question: "How much padding will be applied to the left side of an element with this class: 'padding: 25px 50px 75px 100px'?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "100 pixels",
+        incorrectUno: "25 pixels",
+        incorrectDos: "50 pixels"
     },
     {
         question: "Which HTML tag is used to embed an image in a webpage?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "<img>",
+        incorrectUno: "<image>",
+        incorrectDos: "<picture>"
     },
     {
         question: "Which of these is NOT a way to declare a variable?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "val _______",
+        incorrectUno: "var _______",
+        incorrectDos: "const ______"
     },
     {
         question: "What does OOP stand for?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "Object Oriented Programming",
+        incorrectUno: "Object Outed Point",
+        incorrectDos: "Object Of Programming"
     },
     {
         question: "What is the name of the most widely used Javascript package manager?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "Node",
+        incorrectUno: "Need",
+        incorrectDos: "Nade"
     },
     {
         question: "Which symbol is used to assign a value to a variable?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        correct: "=",
+        incorrectUno: "->",
+        incorrectDos: "-"
     },
     {
-        question: "Which of these is not a Boolean data type?",
-        correct: "correct",
-        incorrectUno: "incorrect",
-        incorrectDos: "incorrect"
+        question: "Which of these is not a Boolean value?",
+        correct: "truth",
+        incorrectUno: "true",
+        incorrectDos: "false"
     }
 ];
 var storage = localStorage.getItem("scores");
@@ -70,6 +70,8 @@ const correctIn = document.getElementById('correct-indicator');
 const scoreForm = document.getElementById('score-form');
 scoreForm.style.display = "none";
 const quizList = document.getElementById('quiz-list');
+const clockContainer = document.getElementById('clock-con');
+const clockLabel = document.getElementById('clock-label');
 
 shuffleArray = arr => {
     for (let i = arr.length -1; i > 0; i--) {
@@ -96,7 +98,9 @@ scoreHandler = score => {
 function endQuiz(time) {
     var scoreDisplay = document.createElement('h3');
     scoreDisplay.innerText = time
-    clock.classList = "display:none"
+    clockLabel.innerHTML = "Score:"
+    clockContainer.appendChild(scoreDisplay);
+    clock.style.display = "none";
     var newScore = {
         initials: "",
         score: time,
